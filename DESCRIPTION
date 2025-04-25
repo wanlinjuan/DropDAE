@@ -1,0 +1,22 @@
+Package: DropDAE
+Title: Denoising autoencoder with contrastive learning for addressing dropout events in scRNA-seq data
+Version: 0.0.0.9000
+Authors@R: person("Wanlin", "Juan", email = "wjuan@mcw.edu", role = c("aut", "cre"))
+Description: A denoising autoencoder enhanced with contrastive learning method for addressing dropout events in scRNA-seq data.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Imports:
+    torch,
+    ggplot2,
+    dplyr,
+    Seurat,
+    splatter,
+    SingleCellExperiment,
+    Matrix,
+    mclust
+RoxygenNote: 7.3.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
