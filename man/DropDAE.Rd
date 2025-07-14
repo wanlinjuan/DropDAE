@@ -20,12 +20,13 @@ DropDAE(
   apply_early_stopping = TRUE,
   lr_scheduler = TRUE,
   select_genes = NULL,
-  activation = "tanh",
+  activation = "relu",
   weight_decay = TRUE,
   cc_runs = 50,
   BN = TRUE,
   gradient_clip = TRUE,
-  clip_value = 5
+  clip_value = 5,
+  seed = seed
 )
 }
 \arguments{

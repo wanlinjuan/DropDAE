@@ -33,9 +33,18 @@
 #'
 #' @export
 #'
-#' @importFrom torch torch_tensor nn_sequential optim_adam
-#' @importFrom ggplot2 ggplot geom_line theme_minimal
-#' @importFrom dplyr filter group_by mutate ungroup
+#' @importFrom magrittr %>%
+#' @importFrom ggplot2 aes ggtitle xlab ylab theme
+#' @importFrom stats kmeans
+#' @importFrom SummarizedExperiment colData colData<- rowData rowData<-
+#' @importFrom SingleCellExperiment SingleCellExperiment
+#' @importFrom scuttle logNormCounts
+#' @importFrom splatter newSplatParams setParams
+#' @importFrom torch torch_float32 nn_linear nn_batch_norm1d nn_identity nn_relu torch_tensor
+#' @importFrom torch nn_sigmoid nn_tanh nn_mse_loss torch_norm torch_relu
+#' @importFrom torch tensor_dataset nn_utils_clip_grad_norm_ nn_sequential optim_adam dataloader
+#' @importFrom Seurat CreateSeuratObject NormalizeData FindVariableFeatures
+#' @importFrom Seurat ScaleData SCTransform GetAssayData
 #'
 #' @examples
 #' \dontrun{
@@ -58,13 +67,16 @@ DropDAE = function(training_data,       # count
                    apply_early_stopping=TRUE,
                    lr_scheduler=TRUE,                   # autotune learning rate
                    select_genes=NULL,
-                   activation = "tanh",                 # sigmoid, tanh
+                   activation = "relu",                 # sigmoid, tanh
                    weight_decay = TRUE,                 # L2 regularization
                    cc_runs = 50,                        # number of clusterings running for consensus clustering
                    BN = TRUE,                          # batch normalization
                    gradient_clip = TRUE,    # Whether to apply gradient clipping
-                   clip_value = 5.0         # Maximum allowed norm for gradients
+                   clip_value = 5.0,         # Maximum allowed norm for gradients
+                   seed=seed
 ) {
+
+  set.seed(seed)
 
   best_loss <- Inf  # Track the best loss
   best_x_hat <- NULL  # Track the best reconstructed output
